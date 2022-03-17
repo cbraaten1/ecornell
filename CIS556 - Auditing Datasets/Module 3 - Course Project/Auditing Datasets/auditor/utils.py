@@ -182,7 +182,34 @@ def daytime(time,daycycle):
     """
     # HINT: Use the code from the previous exercise to get sunset AND sunrise
     # Add a timezone to time if one is missing (the one from the daycycle)
-    pass
+    try:
+        year = time.strftime('%Y')
+
+        md = time.strftime('%m-%d')
+
+        sunrise = daycycle[year][md]['sunrise']
+
+        new_obj = "{}-{}T{}".format(year,md,sunrise)
+
+        test_sunrise = str_to_time(new_obj,daycycle['timezone'])
+
+        sunset = daycycle[year][md]['sunset']
+
+        second_obj = "{}-{}T{}".format(year,md,sunset)
+
+        test_sunset = str_to_time(second_obj,daycycle['timezone'])
+        
+        if time > test_sunrise:
+            if time < test_sunset:
+                return True
+            else:
+                return False
+
+        else:
+            return False
+        
+    except:
+        return None
 
 
 def get_for_id(id,table):
@@ -202,5 +229,20 @@ def get_for_id(id,table):
     Parameter table: The 2-dimensional table of data
     Precondition: table is a non-empty 2-dimension list of strings
     """
-    pass                    # Implement this function
+    try:
+        for name in table:
 
+            for student in name:
+                if student == id:
+                    return name
+
+        return None
+    except:
+        None
+
+table = [['ID,LAST NAME,FIRST NAME,JOINED,SOLO,LICENSE,50 HOURS,INSTRUMENT,ADVANCED,MULTIENGINE'],
+        ['S00304,Wilson,Zachary,2015-01-07,2015-03-24,,,,,'],
+        ['S00308,Bates,Ashley,2015-01-09,2015-04-14,,,,,']]
+
+get_for_id('S00304',table)
+print('Function passes')
